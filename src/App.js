@@ -24,13 +24,7 @@ class App extends Component {
   // this function is called for clear users from state
   clearUsers = () => this.setState({ users: [], loading: false });
 
-  // this function is caalled from the searchUsers by passing props up
-  searchUsers = async (text) => {
-    this.setState( {loading: true} );
-    const res = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GIHUB_CLIENT_SECRET}`);
-    this.setState( {users: res.data.items, loading: false} );
-  }
-
+  
   // this function is called from the user item component to display user details from github
   getUser = async (usernme) => {
     this.setState( {loading: true} );
@@ -45,12 +39,12 @@ class App extends Component {
     this.setState( {repos: res.data, loading: false} ); 
   }
 
-  // this function is called from Search user for empty string
+  /* this function is called from Search user for empty string
   setAlert = (msg, type) => {
     this.setState({ alert: { msg: msg, type: type }})
     // remove alert after 5 seconds
-    setTimeout(() => this.setState({ alert: null }), 5000);
-  }
+    setTimeout(() => setAlert({ alert: null }), 5000);
+  }*/
 
   render() {
 
@@ -68,7 +62,7 @@ class App extends Component {
                 { /*Route for the Home  page */}
                 <Route exact path='/' render={ props => (
                   <Fragment>
-                    <Search searchUsers={this.searchUsers} 
+                    <Search 
                     clearUsers={this.clearUsers}  
                     showClear={users.length > 0? true : false }
                     setAlert={this.setAlert}
